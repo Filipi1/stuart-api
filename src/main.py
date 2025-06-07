@@ -21,8 +21,4 @@ app.add_middleware(
 
 @app.get("/")
 async def health_check():
-    user = await containers.user_repository.get_user_by_token("bb31502mc563zqxcx5pj25")
-    earned_memes = await containers.earned_meme_repository.get_earned_memes_by_user_id(
-        user.id
-    )
-    return {"message": "OK", "user": user, "earned_memes": earned_memes}
+    return {"message": "OK"}
