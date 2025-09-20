@@ -1,7 +1,6 @@
 from modules.meme.entities import EarnedMemeEntity
 from modules.shared.adapters import RepositoryAdapter
 from modules.shared.services.supabase.supabase_service import SupabaseService
-from typing import List, Dict, Any
 
 
 class EarnedMemeRepository(RepositoryAdapter):
@@ -13,7 +12,9 @@ class EarnedMemeRepository(RepositoryAdapter):
         response = await self.__supabase_service.read(self.table, {"userId": user_id})
         return [EarnedMemeEntity(**meme) for meme in response] if response else []
 
-    async def get_earned_memes_with_meme_info(self, user_id: int) -> list[EarnedMemeEntity]:
+    async def get_earned_memes_with_meme_info(
+        self, user_id: int
+    ) -> list[EarnedMemeEntity]:
         response = await self.__supabase_service.custom_query(
             main_table="earned_memes",
             select_fields=[
@@ -23,8 +24,8 @@ class EarnedMemeRepository(RepositoryAdapter):
                 "earnedTimes",
                 "updatedAt",
                 "createdAt",
-                "memes(title, description, image)"
+                "memes(id, title, description, image)",
             ],
-            where_conditions={"userId": user_id}
+            where_conditions={"userId": user_id},
         )
         return [EarnedMemeEntity(**meme) for meme in response] if response else []

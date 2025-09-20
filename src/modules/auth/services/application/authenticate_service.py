@@ -1,9 +1,9 @@
-from src.modules.auth.dtos.authenticate import (
+from modules.auth.dtos.authenticate import (
     AuthenticateRequestDto,
     AuthenticateResponseDto,
 )
 
-from src.modules.shared.adapters import ApplicationService
+from modules.shared.adapters import ApplicationService
 
 
 class AuthenticateApplicationService(ApplicationService):

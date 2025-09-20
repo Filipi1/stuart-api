@@ -15,7 +15,10 @@ class AlbumController(APIController):
 
     @API.route("/", method=HTTPMethod.GET)
     async def get_album(
-        self, token: str = Query(..., description="The token of the user"), 
-        page: int = Query(1, description="The page number")
+        self,
+        token: str = Query(..., description="The token of the user"),
+        page: int = Query(1, description="The page number"),
     ):
-        return await self.__fetch_album.process(FetchAlbumRequestDto(token=token, page=page))
+        return await self.__fetch_album.process(
+            FetchAlbumRequestDto(token=token, page=page)
+        )

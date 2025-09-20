@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from containers import Containers
 from modules.shared.decorators import API
+from modules.shared.middleware.correlation_middleware import CorrelationMiddleware
 
 containers = Containers()
 
@@ -10,9 +11,12 @@ app = FastAPI()
 API.initialize(app)
 
 
+# Adiciona middleware de correlation ID
+app.add_middleware(CorrelationMiddleware)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["http://localhost:60404"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

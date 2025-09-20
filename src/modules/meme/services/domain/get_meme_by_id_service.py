@@ -1,7 +1,10 @@
-from modules.meme.dtos.get_meme_by_id.get_meme_by_id_response_dto import GetMemeByIdResponseDto
+from modules.meme.dtos.get_meme_by_id.get_meme_by_id_response_dto import (
+    GetMemeByIdResponseDto,
+)
 from modules.meme.repositories.meme_repository import MemeRepository
-from src.modules.meme.dtos.get_meme_by_id import GetMemeByIdRequestDto
-from src.modules.shared.adapters import DomainService
+from modules.meme.dtos.get_meme_by_id import GetMemeByIdRequestDto
+from modules.shared.adapters import DomainService
+
 
 class GetMemeByIdDomainService(DomainService):
     def __init__(self, meme_repository: MemeRepository):
