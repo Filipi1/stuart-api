@@ -8,6 +8,4 @@ def coach_repository_provider(supabase_service: SupabaseServiceProvider):
     return CoachRepository(supabase_service)
 
 
-CoachRepositoryProvider = Annotated[
-    CoachRepository, Depends(coach_repository_provider)
-]
+CoachRepositoryProvider = Annotated[CoachRepository, Depends(coach_repository_provider)]

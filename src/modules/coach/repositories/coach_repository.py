@@ -19,4 +19,11 @@ class CoachRepository(RepositoryAdapter):
             return None
         random_coach_data = random.choice(response)
         return CoachEntity(**random_coach_data)
-        
+
+    async def create_coach(self, coach_data: dict) -> CoachEntity:
+        data = {
+            "message": coach_data["message"],
+            "author": coach_data["author"],
+        }
+        response = await self.__supabase_service.create(self.table, data)
+        return CoachEntity(**response[0]) if response else None
