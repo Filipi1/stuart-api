@@ -8,6 +8,9 @@ class MemeRepository(RepositoryAdapter):
         self.__supabase_service = supabase_service
         super().__init__("memes")
 
+    def get_storage_url(self, filename: str) -> str:
+        return self.__supabase_service.get_storage_url(filename)
+
     async def get_meme_by_id(self, meme_id: int) -> MemeEntity:
         response = await self.__supabase_service.read(self.table, {"id": meme_id})
         return MemeEntity(**response[0]) if response else None

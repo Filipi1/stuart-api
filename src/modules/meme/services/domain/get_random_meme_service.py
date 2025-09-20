@@ -17,6 +17,7 @@ class GetRandomMemeDomainService(DomainService):
 
         self.logger.info(f"Meme '{meme.title}' found, incrementing earned times...")
         memeUpdated = await self.__meme_repository.increase_earned_times(meme)
+        memeUpdated.image = self.__meme_repository.get_storage_url(meme.image)
         self.logger.info(
             f"Meme '{memeUpdated.title}' updated successfully with {memeUpdated.earned_times} earned times"
         )

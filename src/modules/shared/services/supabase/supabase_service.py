@@ -49,6 +49,17 @@ class SupabaseService:
         response = await self.supabase.table(table).delete().eq("id", id).execute()
         return response.data
 
+    async def upload_file(self, filename: str, file: bytes) -> str:
+        if self.supabase is None:
+            await self.create_client()
+        storage = "memes-staging" if self.__schema == "staging" else "memes"
+        response = await self.supabase.storage.from_(storage).upload(filename, file)
+        return response.path
+
+    def get_storage_url(self, filename: str) -> str:
+        storage = "memes-staging" if self.__schema == "staging" else "memes"
+        return f"{self.__url}/storage/v1/object/public/{storage}/{filename}"
+
     async def custom_query(
         self,
         main_table: str,

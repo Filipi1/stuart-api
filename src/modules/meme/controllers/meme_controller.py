@@ -1,11 +1,10 @@
 from http import HTTPMethod
 from typing import Optional
 
-from fastapi import Header
+from fastapi import Header, Form, File, UploadFile
 from modules.meme.dtos.fetch_random_meme.fetch_random_meme_response_dto import (
     FetchRandomMemeResponseDto,
 )
-from modules.meme.dtos.create_meme.create_meme_request_dto import CreateMemeRequestDto
 from modules.meme.dtos.create_meme.create_meme_response_dto import CreateMemeResponseDto
 from modules.meme.providers import FetchRandomMemeProvider, CreateMemeProvider
 from modules.shared.decorators import API
@@ -26,6 +25,10 @@ class MemeController(APIController):
 
     @API.route("/", method=HTTPMethod.POST, response_model=CreateMemeResponseDto)
     async def create_meme(
-        self, request: CreateMemeRequestDto, create_meme: CreateMemeProvider
+        self,
+        title: str = Form(..., min_length=1, max_length=255),
+        description: Optional[str] = Form(None, max_length=1000),
+        image: UploadFile = File(...),
+        create_meme: CreateMemeProvider = None,
     ):
-        return await create_meme.process(request)
+        return await create_meme.process(title, description, image)

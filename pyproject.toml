@@ -1,7 +1,7 @@
 [project]
 name = "stuart-api"
 version = "0.1.0"
-description = "Add your description here"
+description = "Stuart Meme Manager API"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -9,6 +9,8 @@ dependencies = [
     "loguru>=0.7.3",
     "pydantic-settings>=2.10.1",
     "supabase>=2.19.0",
+    "pillow>=10.0.0",
+    "python-multipart>=0.0.6",
 ]
 
 [dependency-groups]

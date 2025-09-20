@@ -1,4 +1,5 @@
-from modules.meme.dtos.create_meme.create_meme_request_dto import CreateMemeRequestDto
+from typing import Optional
+from fastapi import UploadFile
 from modules.meme.dtos.create_meme.create_meme_response_dto import CreateMemeResponseDto
 from modules.meme.services.domain.create_meme_service import CreateMemeDomainService
 from modules.shared.adapters import ApplicationService
@@ -9,13 +10,13 @@ class CreateMemeApplicationService(ApplicationService):
         self.__create_meme_domain_service = create_meme_domain_service
         super().__init__(CreateMemeApplicationService.__name__)
 
-    async def process(self, request: CreateMemeRequestDto) -> CreateMemeResponseDto:
-        self.logger.info(f"Creating meme: {request.title}...")
+    async def process(
+        self, title: str, description: Optional[str], image: UploadFile
+    ) -> CreateMemeResponseDto:
+        file = await image.read()
         meme = await self.__create_meme_domain_service.process(
-            title=request.title, description=request.description, image=request.image
+            title=title, description=description, filename=image.filename, file=file
         )
-        self.logger.info(f"Meme created: {meme.title}...")
-
         return CreateMemeResponseDto(
             id=meme.id,
             title=meme.title,
