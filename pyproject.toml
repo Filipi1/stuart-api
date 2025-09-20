@@ -5,18 +5,18 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "fastapi[standard]>=0.115.12",
+    "fastapi[standard]>=0.116.2",
     "loguru>=0.7.3",
-    "pydantic-settings>=2.9.1",
-    "supabase>=2.15.2",
+    "pydantic-settings>=2.10.1",
+    "supabase>=2.19.0",
 ]
 
 [dependency-groups]
 dev = [
     "archpython-cli",
-    "black>=25.1.0",
-    "pyright>=1.1.401",
-    "ruff>=0.11.13",
+    "black>=25.9.0",
+    "pyright>=1.1.405",
+    "ruff>=0.13.1",
     "taskipy>=1.14.1",
 ]
 

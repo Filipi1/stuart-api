@@ -1207,18 +1207,18 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "fastapi", extras = ["standard"], specifier = ">=0.115.12" },
+    { name = "fastapi", extras = ["standard"], specifier = ">=0.116.2" },
     { name = "loguru", specifier = ">=0.7.3" },
-    { name = "pydantic-settings", specifier = ">=2.9.1" },
-    { name = "supabase", specifier = ">=2.15.2" },
+    { name = "pydantic-settings", specifier = ">=2.10.1" },
+    { name = "supabase", specifier = ">=2.19.0" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "archpython-cli", git = "https://github.com/Filipi1/archpython-cli" },
-    { name = "black", specifier = ">=25.1.0" },
-    { name = "pyright", specifier = ">=1.1.401" },
-    { name = "ruff", specifier = ">=0.11.13" },
+    { name = "black", specifier = ">=25.9.0" },
+    { name = "pyright", specifier = ">=1.1.405" },
+    { name = "ruff", specifier = ">=0.13.1" },
     { name = "taskipy", specifier = ">=1.14.1" },
 ]
 

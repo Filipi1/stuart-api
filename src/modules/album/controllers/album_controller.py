@@ -17,6 +17,4 @@ class AlbumController(APIController):
         token: str = Query(..., description="The token of the user"),
         page: int = Query(1, description="The page number"),
     ):
-        return await fetch_album.process(
-            FetchAlbumRequestDto(token=token, page=page)
-        )
+        return await fetch_album.process(FetchAlbumRequestDto(token=token, page=page))

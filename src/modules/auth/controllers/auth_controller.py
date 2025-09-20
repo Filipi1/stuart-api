@@ -14,8 +14,6 @@ from modules.shared.adapters import APIController
 class AuthController(APIController):
     @API.route("/", method=HTTPMethod.GET, response_model=AuthenticateResponseDto)
     async def authenticate(
-        self, 
-        body: AuthenticateRequestDto,
-        authenticate_service: AuthenticateProvider
+        self, body: AuthenticateRequestDto, authenticate_service: AuthenticateProvider
     ):
         return await authenticate_service.process(body)
