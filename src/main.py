@@ -1,11 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from containers import Containers
 from modules.shared.decorators import API
 from modules.shared.middleware.correlation_middleware import CorrelationMiddleware
-
-containers = Containers()
 
 app = FastAPI()
 API.initialize(app)

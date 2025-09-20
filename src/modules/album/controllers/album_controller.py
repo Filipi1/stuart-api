@@ -5,20 +5,18 @@ from modules.shared.adapters import APIController
 
 from fastapi import Query
 
-from containers import containers
+from modules.album.providers import FetchAlbumServiceProvider
 
 
 @API.controller("album")
 class AlbumController(APIController):
-    def __init__(self):
-        self.__fetch_album = containers.fetch_album
-
     @API.route("/", method=HTTPMethod.GET)
     async def get_album(
         self,
+        fetch_album: FetchAlbumServiceProvider,
         token: str = Query(..., description="The token of the user"),
         page: int = Query(1, description="The page number"),
     ):
-        return await self.__fetch_album.process(
+        return await fetch_album.process(
             FetchAlbumRequestDto(token=token, page=page)
         )

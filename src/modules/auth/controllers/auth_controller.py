@@ -5,18 +5,17 @@ from modules.auth.dtos.authenticate.authenticate_request_dto import (
 from modules.auth.dtos.authenticate.authenticate_response_dto import (
     AuthenticateResponseDto,
 )
+from modules.auth.providers import AuthenticateProvider
 from modules.shared.decorators import API
 from modules.shared.adapters import APIController
-from containers import containers
 
 
 @API.controller("auth")
 class AuthController(APIController):
-    def __init__(self):
-        self.__authenticate_application_service = (
-            containers.authenticate_application_service
-        )
-
     @API.route("/", method=HTTPMethod.GET, response_model=AuthenticateResponseDto)
-    async def authenticate(self, body: AuthenticateRequestDto):
-        return await self.__authenticate_application_service.process(body)
+    async def authenticate(
+        self, 
+        body: AuthenticateRequestDto,
+        authenticate_service: AuthenticateProvider
+    ):
+        return await authenticate_service.process(body)
