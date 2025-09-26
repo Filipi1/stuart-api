@@ -21,7 +21,7 @@ class MemeController(APIController):
             None, description="The token of the user"
         ),
     ):
-        return await fetch_random_meme.process()
+        return await fetch_random_meme.process(x_request_token)
 
     @API.route("/", method=HTTPMethod.POST, response_model=CreateMemeResponseDto)
     async def create_meme(

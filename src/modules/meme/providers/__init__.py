@@ -6,6 +6,7 @@ from .get_earned_memes_by_user_provider import GetEarnedMemesByUserServiceProvid
 from .earned_memes_repository_provider import EarnedMemesRepositoryProvider
 from .create_meme_provider import CreateMemeProvider
 from .create_meme_domain_provider import CreateMemeDomainProvider
+from .get_memes_paginated_service_provider import GetMemesPaginatedServiceProvider
 
 __all__ = [
     "FetchRandomMemeProvider",
@@ -16,4 +17,5 @@ __all__ = [
     "EarnedMemesRepositoryProvider",
     "CreateMemeProvider",
     "CreateMemeDomainProvider",
+    "GetMemesPaginatedServiceProvider",
 ]

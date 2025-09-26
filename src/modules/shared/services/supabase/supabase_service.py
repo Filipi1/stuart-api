@@ -19,7 +19,7 @@ class SupabaseService:
             await self.create_client()
 
         response = await self.supabase.table(table).insert(data).execute()
-        return response.data
+        return response.data[0]
 
     async def read(self, table: str, where: dict) -> list[dict]:
         if self.supabase is None:
@@ -37,7 +37,6 @@ class SupabaseService:
 
         await self.supabase.table(table).update(data).eq("id", int(id)).execute()
 
-        # Busca os dados atualizados
         updated_data = await self.read(table, {"id": int(id)})
 
         return updated_data
@@ -67,29 +66,14 @@ class SupabaseService:
         where_conditions: Optional[Dict[str, Any]] = None,
         order_by: Optional[Dict[str, str]] = None,
         limit: Optional[int] = None,
+        offset: Optional[int] = None,
     ) -> List[Dict[str, Any]]:
-        """
-        Executa uma query personalizada.
-
-        Args:
-            main_table: Nome da tabela principal
-            select_fields: Lista de campos a serem selecionados
-            where_conditions: Condições WHERE (opcional)
-            order_by: Ordenação (opcional) - Exemplo: {"created_at": "desc"}
-            limit: Limite de resultados (opcional)
-
-        Returns:
-            Lista de resultados da query
-        """
-
         if self.supabase is None:
             await self.create_client()
 
-        # Construir a query de seleção
         select_query = ",".join(select_fields)
         query = self.supabase.table(main_table).select(select_query)
 
-        # Adiciona condições WHERE
         if where_conditions:
             for key, value in where_conditions.items():
                 if isinstance(value, dict):
@@ -109,14 +93,15 @@ class SupabaseService:
                 else:
                     query = query.eq(key, value)
 
-        # Adiciona ordenação
         if order_by:
             for field, direction in order_by.items():
                 query = query.order(field, desc=(direction.lower() == "desc"))
 
-        # Adiciona limite
         if limit:
             query = query.limit(limit)
+
+        if offset:
+            query = query.range(offset, offset + (limit or 0) - 1)
 
         response = await query.execute()
         return response.data

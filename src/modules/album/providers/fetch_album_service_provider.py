@@ -5,10 +5,11 @@ from modules.album.services.application.fetch_album_service import (
 from typing import Annotated
 from fastapi import Depends
 
+from modules.meme.providers.get_memes_paginated_service_provider import GetMemesPaginatedServiceProvider
 from modules.user.providers import GetUserByTokenServiceProvider
 from modules.album.providers import BuildAlbumSlotsServiceProvider
 from modules.meme.providers import (
-    MemeRepositoryProvider,
+    GetMemesPaginatedServiceProvider,
     GetEarnedMemesByUserServiceProvider,
 )
 
@@ -17,13 +18,13 @@ def fetch_album_service_provider(
     get_user_by_token: GetUserByTokenServiceProvider,
     get_earned_memes_by_user: GetEarnedMemesByUserServiceProvider,
     build_album_slots: BuildAlbumSlotsServiceProvider,
-    meme_repository: MemeRepositoryProvider,
+    get_memes_paginated: GetMemesPaginatedServiceProvider,
 ):
     return FetchAlbumApplicationService(
         get_user_by_token=get_user_by_token,
         get_earned_memes_by_user=get_earned_memes_by_user,
         build_album_slots=build_album_slots,
-        meme_repository=meme_repository,
+        get_memes_paginated=get_memes_paginated,
     )
 
 

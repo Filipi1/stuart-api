@@ -28,7 +28,6 @@ class MemeRepository(RepositoryAdapter):
     async def get_random_meme(self) -> MemeEntity:
         import random
 
-        # Busca todos os memes
         response = await self.__supabase_service.custom_query(
             main_table=self.table, select_fields=["*"], where_conditions={}
         )
@@ -36,7 +35,6 @@ class MemeRepository(RepositoryAdapter):
         if not response:
             return None
 
-        # Seleciona um meme aleatório
         random_meme = random.choice(response)
         return MemeEntity(**random_meme)
 
@@ -53,9 +51,9 @@ class MemeRepository(RepositoryAdapter):
         response = await self.__supabase_service.custom_query(
             main_table=self.table,
             select_fields=["id", "title", "description", "image"],
-            order_by={"id": "asc"},
+            order_by={"createdAt": "asc"},
             limit=items_per_page,
-            where_conditions={"id": {"gte": offset + 1}},
+            offset=offset,
         )
         return [MemeEntity(**meme) for meme in response] if response else []
 

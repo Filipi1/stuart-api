@@ -1,0 +1,2 @@
+class FetchUserByUsernameRequestDto:
+    pass

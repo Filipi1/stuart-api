@@ -11,3 +11,16 @@ class UserRepository(RepositoryAdapter):
     async def get_user_by_token(self, token: str) -> User:
         response = await self.__supabase_service.read(self.table, {"token": token})
         return User(**response[0]) if response else None
+
+    async def get_user_by_username(self, username: str) -> User:
+        response = await self.__supabase_service.read(self.table, {"username": username})
+        return User(**response[0]) if response else None
+
+    async def create_user(self, username: str, token: str) -> User:
+        data = {
+            "username": username,
+            "token": token,
+        }
+        response = await self.__supabase_service.create(self.table, data)
+
+        return User(**response)

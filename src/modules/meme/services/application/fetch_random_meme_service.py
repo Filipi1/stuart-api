@@ -1,3 +1,4 @@
+from typing import Optional
 from modules.meme.exceptions.meme_not_found_exception import MemeNotFoundException
 from modules.meme.services.domain.get_random_meme_service import (
     GetRandomMemeDomainService,
@@ -11,8 +12,8 @@ class FetchRandomMemeApplicationService(ApplicationService):
     def __init__(self, get_random_meme: GetRandomMemeDomainService):
         self.__get_random_meme = get_random_meme
 
-    async def process(self) -> FetchRandomMemeResponseDto:
-        meme = await self.__get_random_meme.process()
+    async def process(self, user_token: Optional[str] = None) -> FetchRandomMemeResponseDto:
+        meme = await self.__get_random_meme.process(user_token)
         if not meme:
             raise MemeNotFoundException("Meme not found")
 

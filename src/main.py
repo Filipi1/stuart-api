@@ -3,14 +3,15 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from modules.shared.decorators import API
 from modules.shared.middleware.correlation_middleware import CorrelationMiddleware
+from modules.shared.exceptions.application_exception import ApplicationException
+from modules.shared.exceptions.handlers import application_exception_handler
 
 app = FastAPI()
 API.initialize(app)
 
 
-# Adiciona middleware de correlation ID
+app.add_exception_handler(ApplicationException, application_exception_handler)
 app.add_middleware(CorrelationMiddleware)
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:60404"],
