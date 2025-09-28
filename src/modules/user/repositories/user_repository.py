@@ -1,6 +1,6 @@
 from modules.shared.adapters import RepositoryAdapter
-from modules.user.entities import User
 from modules.shared.services.supabase.supabase_service import SupabaseService
+from modules.user.entities import User
 
 
 class UserRepository(RepositoryAdapter):

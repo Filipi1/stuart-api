@@ -1,6 +1,6 @@
-from modules.user.repositories.user_repository import UserRepository
 from modules.shared.adapters import DomainService
 from modules.user.entities.user import User
+from modules.user.repositories.user_repository import UserRepository
 
 
 class CreateUserDomainService(DomainService):

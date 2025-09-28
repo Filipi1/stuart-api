@@ -1,14 +1,13 @@
+from modules.meme.dtos.fetch_earned_memes_by_user import (
+    FetchEarnedMemesByUserRequestDto,
+    FetchEarnedMemesByUserResponseDto,
+)
 from modules.meme.dtos.get_earned_memes_by_user.get_earned_memes_by_user_request_dto import (
     GetEarnedMemesByUserRequestDto,
 )
 from modules.meme.services.domain.get_earned_memes_by_user_service import (
     GetEarnedMemesByUserDomainService,
 )
-from modules.meme.dtos.fetch_earned_memes_by_user import (
-    FetchEarnedMemesByUserRequestDto,
-    FetchEarnedMemesByUserResponseDto,
-)
-
 from modules.shared.adapters import ApplicationService
 
 

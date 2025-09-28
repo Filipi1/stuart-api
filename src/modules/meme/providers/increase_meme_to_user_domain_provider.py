@@ -2,14 +2,14 @@ from typing import Annotated
 
 from fastapi import Depends
 
+from modules.meme.providers.earned_memes_repository_provider import (
+    EarnedMemesRepositoryProvider,
+)
 from modules.meme.services.domain.increase_meme_to_user_service import (
     IncreaseMemeToUserDomainService,
 )
 from modules.user.providers.get_user_by_token_service_provider import (
     GetUserByTokenServiceProvider,
-)
-from modules.meme.providers.earned_memes_repository_provider import (
-    EarnedMemesRepositoryProvider,
 )
 
 

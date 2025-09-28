@@ -1,5 +1,5 @@
-from typing import Optional
 import random
+from typing import Optional
 
 from modules.coach.entities.coach_entity import CoachEntity
 from modules.shared.adapters import RepositoryAdapter

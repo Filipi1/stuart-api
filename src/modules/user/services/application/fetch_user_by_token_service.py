@@ -1,3 +1,10 @@
+from modules.shared.adapters import ApplicationService
+from modules.user.dtos.fetch_user_by_token.fetch_user_by_token_request_dto import (
+    FetchUserByTokenRequestDto,
+)
+from modules.user.dtos.fetch_user_by_token.fetch_user_by_token_response_dto import (
+    FetchUserByTokenResponseDto,
+)
 from modules.user.dtos.get_user_by_token.get_user_by_token_request_dto import (
     GetUserByTokenRequestDto,
 )
@@ -5,14 +12,6 @@ from modules.user.exceptions.user_not_found_exception import UserNotFoundExcepti
 from modules.user.services.domain.get_user_by_token_service import (
     GetUserByTokenDomainService,
 )
-from modules.user.dtos.fetch_user_by_token.fetch_user_by_token_request_dto import (
-    FetchUserByTokenRequestDto,
-)
-from modules.user.dtos.fetch_user_by_token.fetch_user_by_token_response_dto import (
-    FetchUserByTokenResponseDto,
-)
-
-from modules.shared.adapters import ApplicationService
 
 
 class FetchUserByTokenApplicationService(ApplicationService):

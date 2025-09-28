@@ -2,15 +2,15 @@ import base64
 import uuid
 from datetime import datetime
 
-from modules.shared.services.image_builder import ImageBuilderService
-from modules.fakenews.services.domain.headline_generator_service import (
-    HeadlineGeneratorService,
-)
-from modules.fakenews.entities.fake_news import FakeNews
 from modules.fakenews.dtos.create_fake_news import (
     CreateFakeNewsRequestDto,
     CreateFakeNewsResponseDto,
 )
+from modules.fakenews.entities.fake_news import FakeNews
+from modules.fakenews.services.domain.headline_generator_service import (
+    HeadlineGeneratorService,
+)
+from modules.shared.services.image_builder import ImageBuilderService
 
 
 class CreateFakeNewsService:

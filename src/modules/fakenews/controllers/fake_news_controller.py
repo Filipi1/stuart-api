@@ -1,10 +1,9 @@
 import base64
 from http import HTTPMethod
-from fastapi import HTTPException, status, Form, File, UploadFile
+
+from fastapi import File, Form, HTTPException, UploadFile, status
 from fastapi.responses import JSONResponse
 
-from modules.shared.adapters.api_controller import APIController
-from modules.shared.decorators import API
 from modules.fakenews.dtos.create_fake_news import (
     CreateFakeNewsRequestDto,
     CreateFakeNewsResponseDto,
@@ -12,10 +11,12 @@ from modules.fakenews.dtos.create_fake_news import (
 from modules.fakenews.services.application.create_fake_news_service import (
     CreateFakeNewsService,
 )
-from modules.shared.services.image_builder import ImageBuilderService
 from modules.fakenews.services.domain.headline_generator_service import (
     HeadlineGeneratorService,
 )
+from modules.shared.adapters.api_controller import APIController
+from modules.shared.decorators import API
+from modules.shared.services.image_builder import ImageBuilderService
 
 
 @API.controller("fakenews")

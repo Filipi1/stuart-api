@@ -1,9 +1,8 @@
-from modules.meme.entities.earned_meme import EarnedMemeEntity
-from modules.meme.repositories.earned_meme_repository import EarnedMemeRepository
 from modules.meme.dtos.get_earned_memes_by_user.get_earned_memes_by_user_request_dto import (
     GetEarnedMemesByUserRequestDto,
 )
-
+from modules.meme.entities.earned_meme import EarnedMemeEntity
+from modules.meme.repositories.earned_meme_repository import EarnedMemeRepository
 from modules.shared.adapters import DomainService
 
 

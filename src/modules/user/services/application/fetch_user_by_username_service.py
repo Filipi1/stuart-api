@@ -1,13 +1,12 @@
+from modules.shared.adapters import ApplicationService
 from modules.user.dtos.fetch_user_by_username import (
     FetchUserByUsernameRequestDto,
     FetchUserByUsernameResponseDto,
 )
+from modules.user.exceptions.user_not_found_exception import UserNotFoundException
 from modules.user.services.domain.get_user_by_username_service import (
     GetUserByUsernameDomainService,
 )
-from modules.user.exceptions.user_not_found_exception import UserNotFoundException
-
-from modules.shared.adapters import ApplicationService
 
 
 class FetchUserByUsernameApplicationService(ApplicationService):

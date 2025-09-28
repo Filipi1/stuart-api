@@ -1,5 +1,7 @@
 from typing import Optional
+
 from fastapi import UploadFile
+
 from modules.meme.dtos.create_meme.create_meme_response_dto import CreateMemeResponseDto
 from modules.meme.services.domain.create_meme_service import CreateMemeDomainService
 from modules.shared.adapters import ApplicationService

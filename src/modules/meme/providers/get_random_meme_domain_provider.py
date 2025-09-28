@@ -1,11 +1,13 @@
 from typing import Annotated
+
 from fastapi import Depends
-from modules.meme.services.domain.get_random_meme_service import (
-    GetRandomMemeDomainService,
-)
-from modules.meme.providers.meme_repository_provider import MemeRepositoryProvider
+
 from modules.meme.providers.increase_meme_to_user_domain_provider import (
     IncreaseMemeToUserDomainServiceProvider,
+)
+from modules.meme.providers.meme_repository_provider import MemeRepositoryProvider
+from modules.meme.services.domain.get_random_meme_service import (
+    GetRandomMemeDomainService,
 )
 
 

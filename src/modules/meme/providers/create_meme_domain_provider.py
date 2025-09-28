@@ -1,7 +1,9 @@
 from typing import Annotated
+
 from fastapi import Depends
-from modules.meme.services.domain.create_meme_service import CreateMemeDomainService
+
 from modules.meme.providers.meme_repository_provider import MemeRepositoryProvider
+from modules.meme.services.domain.create_meme_service import CreateMemeDomainService
 from modules.shared.providers.supabase_service_provider import SupabaseServiceProvider
 
 

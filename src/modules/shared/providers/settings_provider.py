@@ -1,6 +1,7 @@
 from typing import Annotated
 
 from fastapi import Depends
+
 from modules.shared.settings.settings import Settings
 
 

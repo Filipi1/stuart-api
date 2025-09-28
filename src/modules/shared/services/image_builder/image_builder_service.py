@@ -1,8 +1,9 @@
-from PIL import Image, ImageDraw, ImageFont
-import io
 import base64
-from typing import Optional
+import io
 import os
+from typing import Optional
+
+from PIL import Image, ImageDraw, ImageFont
 
 
 class ImageBuilderService:
@@ -109,8 +110,8 @@ class ImageBuilderService:
         draw.text((x_position, 80), edition_info, fill="black", font=info_font)
 
     def _draw_current_date(self, draw: ImageDraw.Draw):
-        from datetime import datetime
         import locale
+        from datetime import datetime
 
         try:
             locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")

@@ -1,11 +1,11 @@
 from http import HTTPMethod
-from modules.album.dtos.fetch_album.fetch_album_request_dto import FetchAlbumRequestDto
-from modules.shared.decorators import API
-from modules.shared.adapters import APIController
 
 from fastapi import Query
 
+from modules.album.dtos.fetch_album.fetch_album_request_dto import FetchAlbumRequestDto
 from modules.album.providers import FetchAlbumServiceProvider
+from modules.shared.adapters import APIController
+from modules.shared.decorators import API
 
 
 @API.controller("album")

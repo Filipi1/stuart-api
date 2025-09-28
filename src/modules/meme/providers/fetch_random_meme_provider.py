@@ -1,11 +1,12 @@
 from typing import Annotated
 
 from fastapi import Depends
-from modules.meme.services.application.fetch_random_meme_service import (
-    FetchRandomMemeApplicationService,
-)
+
 from modules.meme.providers.get_random_meme_domain_provider import (
     GetRandomMemeDomainProvider,
+)
+from modules.meme.services.application.fetch_random_meme_service import (
+    FetchRandomMemeApplicationService,
 )
 
 

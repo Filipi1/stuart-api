@@ -1,7 +1,6 @@
+from modules.album.dtos.build_album_slots import BuildAlbumSlotsRequestDto
 from modules.album.entities.album_figure import AlbumFigureEntity
 from modules.album.entities.album_slot import AlbumSlotEntity
-from modules.album.dtos.build_album_slots import BuildAlbumSlotsRequestDto
-
 from modules.shared.adapters import DomainService
 
 

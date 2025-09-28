@@ -2,9 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from modules.shared.decorators import API
-from modules.shared.middleware.correlation_middleware import CorrelationMiddleware
 from modules.shared.exceptions.application_exception import ApplicationException
 from modules.shared.exceptions.handlers import application_exception_handler
+from modules.shared.middleware.correlation_middleware import CorrelationMiddleware
 
 app = FastAPI()
 API.initialize(app)

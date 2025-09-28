@@ -1,5 +1,7 @@
 from typing import Annotated
+
 from fastapi import Depends
+
 from modules.shared.services.supabase.supabase_service import SupabaseService
 from modules.shared.settings.settings import Settings
 

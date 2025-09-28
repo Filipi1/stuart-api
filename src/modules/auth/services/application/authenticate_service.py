@@ -2,11 +2,10 @@ from modules.auth.dtos.authenticate import (
     AuthenticateRequestDto,
     AuthenticateResponseDto,
 )
-
-from modules.shared.adapters import ApplicationService
 from modules.auth.services.domain.generate_token_service import (
     GenerateTokenDomainService,
 )
+from modules.shared.adapters import ApplicationService
 
 
 class AuthenticateApplicationService(ApplicationService):

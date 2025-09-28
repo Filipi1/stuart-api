@@ -1,6 +1,7 @@
 from typing import Annotated
 
 from fastapi import Depends
+
 from modules.shared.providers import SupabaseServiceProvider
 from modules.user.repositories.user_repository import UserRepository
 

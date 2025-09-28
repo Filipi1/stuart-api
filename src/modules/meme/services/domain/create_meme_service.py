@@ -1,5 +1,6 @@
-from typing import Optional
 import uuid
+from typing import Optional
+
 from modules.meme.entities.meme import MemeEntity
 from modules.meme.repositories.meme_repository import MemeRepository
 from modules.shared.adapters import DomainService

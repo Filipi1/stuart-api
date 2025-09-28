@@ -1,6 +1,7 @@
-from fastapi import Form, File, UploadFile
-from pydantic import BaseModel
 from typing import Optional
+
+from fastapi import File, Form, UploadFile
+from pydantic import BaseModel
 
 
 class CreateMemeRequestDto(BaseModel):

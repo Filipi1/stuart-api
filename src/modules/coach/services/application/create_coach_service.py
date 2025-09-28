@@ -1,10 +1,9 @@
-from modules.coach.services.domain.create_coach_service import (
-    CreateCoachDomainService,
-)
 from modules.coach.dtos.create_coach.create_coach_response_dto import (
     CreateCoachResponseDto,
 )
-
+from modules.coach.services.domain.create_coach_service import (
+    CreateCoachDomainService,
+)
 from modules.shared.adapters import ApplicationService
 
 

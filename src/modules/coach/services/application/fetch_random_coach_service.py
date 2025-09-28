@@ -1,11 +1,10 @@
+from modules.coach.dtos.fetch_random_coach.fetch_random_coach_response_dto import (
+    FetchRandomCoachResponseDto,
+)
 from modules.coach.exceptions.coach_not_found_exception import CoachNotFoundException
 from modules.coach.services.domain.get_random_coach_service import (
     GetRandomCoachDomainService,
 )
-from modules.coach.dtos.fetch_random_coach.fetch_random_coach_response_dto import (
-    FetchRandomCoachResponseDto,
-)
-
 from modules.shared.adapters import ApplicationService
 
 

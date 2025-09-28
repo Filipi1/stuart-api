@@ -1,14 +1,15 @@
 from typing import Annotated
+
 from fastapi import Depends
 
 from modules.auth.services.domain.generate_token_service import (
     GenerateTokenDomainService,
 )
-from modules.user.providers.get_user_by_username_service_provider import (
-    GetUserByUsernameDomainServiceProvider,
-)
 from modules.user.providers.create_user_service_provider import (
     CreateUserDomainServiceProvider,
+)
+from modules.user.providers.get_user_by_username_service_provider import (
+    GetUserByUsernameDomainServiceProvider,
 )
 
 

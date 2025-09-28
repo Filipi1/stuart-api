@@ -1,6 +1,6 @@
 from .controllers import FakeNewsController
-from .entities import FakeNews
 from .dtos.create_fake_news import CreateFakeNewsRequestDto, CreateFakeNewsResponseDto
+from .entities import FakeNews
 
 __all__ = [
     "FakeNewsController",

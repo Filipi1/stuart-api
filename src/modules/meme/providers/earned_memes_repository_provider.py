@@ -1,5 +1,7 @@
 from typing import Annotated
+
 from fastapi import Depends
+
 from modules.meme.repositories.earned_meme_repository import EarnedMemeRepository
 from modules.shared.providers import SupabaseServiceProvider
 

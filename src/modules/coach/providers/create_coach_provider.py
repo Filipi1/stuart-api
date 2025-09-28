@@ -1,11 +1,12 @@
 from typing import Annotated
 
 from fastapi import Depends
-from modules.coach.services.application.create_coach_service import (
-    CreateCoachApplicationService,
-)
+
 from modules.coach.providers.create_coach_domain_provider import (
     CreateCoachDomainProvider,
+)
+from modules.coach.services.application.create_coach_service import (
+    CreateCoachApplicationService,
 )
 
 

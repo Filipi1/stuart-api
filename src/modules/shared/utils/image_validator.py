@@ -1,6 +1,8 @@
 import io
 from typing import Tuple
+
 from PIL import Image
+
 from modules.shared.exceptions.invalid_image_exception import InvalidImageException
 
 

@@ -1,5 +1,6 @@
 from http import HTTPMethod
 from typing import Any, Optional, Sequence
+
 from fastapi import APIRouter, Depends, FastAPI
 
 from modules.shared.adapters.api_controller import APIController

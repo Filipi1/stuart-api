@@ -1,6 +1,7 @@
 from modules.album.dtos.build_album_slots.build_album_slots_request_dto import (
     BuildAlbumSlotsRequestDto,
 )
+from modules.album.dtos.fetch_album import FetchAlbumRequestDto, FetchAlbumResponseDto
 from modules.album.services.domain.build_album_slots_service import (
     BuildAlbumSlotsDomainService,
 )
@@ -11,8 +12,6 @@ from modules.meme.services.domain.get_earned_memes_by_user_service import (
 from modules.meme.services.domain.get_memes_paginated_service import (
     GetMemesPaginatedDomainService,
 )
-from modules.album.dtos.fetch_album import FetchAlbumRequestDto, FetchAlbumResponseDto
-
 from modules.shared.adapters import ApplicationService
 from modules.user.dtos.get_user_by_token import GetUserByTokenRequestDto
 from modules.user.exceptions.user_not_found_exception import UserNotFoundException

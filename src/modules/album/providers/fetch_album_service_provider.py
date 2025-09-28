@@ -1,16 +1,16 @@
+from typing import Annotated
+
+from fastapi import Depends
+
+from modules.album.providers import BuildAlbumSlotsServiceProvider
 from modules.album.services.application.fetch_album_service import (
     FetchAlbumApplicationService,
 )
-
-from typing import Annotated
-from fastapi import Depends
-
-from modules.user.providers import GetUserByTokenServiceProvider
-from modules.album.providers import BuildAlbumSlotsServiceProvider
 from modules.meme.providers import (
-    GetMemesPaginatedServiceProvider,
     GetEarnedMemesByUserServiceProvider,
+    GetMemesPaginatedServiceProvider,
 )
+from modules.user.providers import GetUserByTokenServiceProvider
 
 
 def fetch_album_service_provider(

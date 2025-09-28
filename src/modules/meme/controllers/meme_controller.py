@@ -1,14 +1,15 @@
 from http import HTTPMethod
 from typing import Optional
 
-from fastapi import Header, Form, File, UploadFile
+from fastapi import File, Form, Header, UploadFile
+
+from modules.meme.dtos.create_meme.create_meme_response_dto import CreateMemeResponseDto
 from modules.meme.dtos.fetch_random_meme.fetch_random_meme_response_dto import (
     FetchRandomMemeResponseDto,
 )
-from modules.meme.dtos.create_meme.create_meme_response_dto import CreateMemeResponseDto
-from modules.meme.providers import FetchRandomMemeProvider, CreateMemeProvider
-from modules.shared.decorators import API
+from modules.meme.providers import CreateMemeProvider, FetchRandomMemeProvider
 from modules.shared.adapters import APIController
+from modules.shared.decorators import API
 
 
 @API.controller("meme")

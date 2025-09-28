@@ -1,5 +1,6 @@
-from supabase import AsyncClient, acreate_client, AsyncClientOptions
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
+
+from supabase import AsyncClient, AsyncClientOptions, acreate_client
 
 
 class SupabaseService:

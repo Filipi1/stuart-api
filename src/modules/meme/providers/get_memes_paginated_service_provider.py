@@ -1,5 +1,7 @@
 from typing import Annotated
+
 from fastapi import Depends
+
 from modules.meme.providers.meme_repository_provider import MemeRepositoryProvider
 from modules.meme.services.domain.get_memes_paginated_service import (
     GetMemesPaginatedDomainService,

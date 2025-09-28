@@ -1,4 +1,5 @@
 from typing import Optional
+
 from modules.meme.entities.meme import MemeEntity
 from modules.meme.repositories.meme_repository import MemeRepository
 from modules.meme.services.domain.increase_meme_to_user_service import (

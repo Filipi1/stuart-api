@@ -1,10 +1,10 @@
-from modules.shared.adapters import DomainService
+from modules.meme.entities.earned_meme import EarnedMemeEntity
+from modules.meme.entities.meme import MemeEntity
 from modules.meme.repositories.earned_meme_repository import EarnedMemeRepository
+from modules.shared.adapters import DomainService
 from modules.user.services.domain.get_user_by_token_service import (
     GetUserByTokenDomainService,
 )
-from modules.meme.entities.meme import MemeEntity
-from modules.meme.entities.earned_meme import EarnedMemeEntity
 
 
 class IncreaseMemeToUserDomainService(DomainService):

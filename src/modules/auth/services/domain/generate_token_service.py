@@ -1,6 +1,6 @@
 from hashlib import sha256
-from modules.shared.adapters import DomainService
 
+from modules.shared.adapters import DomainService
 from modules.user.services.domain.create_user_service import CreateUserDomainService
 from modules.user.services.domain.get_user_by_username_service import (
     GetUserByUsernameDomainService,

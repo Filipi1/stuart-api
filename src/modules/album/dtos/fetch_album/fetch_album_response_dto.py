@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+
 from modules.album.entities.album_slot import AlbumSlotEntity
 
 

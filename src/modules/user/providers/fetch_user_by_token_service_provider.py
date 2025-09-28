@@ -1,6 +1,7 @@
 from typing import Annotated
 
 from fastapi import Depends
+
 from modules.user.providers.get_user_by_token_service_provider import (
     GetUserByTokenServiceProvider,
 )

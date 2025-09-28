@@ -1,5 +1,7 @@
 from typing import Annotated
+
 from fastapi import Depends
+
 from modules.meme.providers.get_earned_memes_by_user_provider import (
     GetEarnedMemesByUserServiceProvider,
 )

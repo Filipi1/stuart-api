@@ -1,7 +1,9 @@
 from typing import Annotated
+
 from fastapi import Depends
-from modules.user.services.domain.create_user_service import CreateUserDomainService
+
 from modules.user.providers.user_repository_provider import UserRepositoryProvider
+from modules.user.services.domain.create_user_service import CreateUserDomainService
 
 
 def create_user_service_provider(user_repository: UserRepositoryProvider):

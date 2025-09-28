@@ -1,10 +1,10 @@
 from typing import Optional
+
+from modules.meme.dtos.fetch_random_meme import FetchRandomMemeResponseDto
 from modules.meme.exceptions.meme_not_found_exception import MemeNotFoundException
 from modules.meme.services.domain.get_random_meme_service import (
     GetRandomMemeDomainService,
 )
-from modules.meme.dtos.fetch_random_meme import FetchRandomMemeResponseDto
-
 from modules.shared.adapters import ApplicationService
 
 

@@ -1,4 +1,5 @@
 from http import HTTPMethod
+
 from modules.auth.dtos.authenticate.authenticate_request_dto import (
     AuthenticateRequestDto,
 )
@@ -6,8 +7,8 @@ from modules.auth.dtos.authenticate.authenticate_response_dto import (
     AuthenticateResponseDto,
 )
 from modules.auth.providers import AuthenticateProvider
-from modules.shared.decorators import API
 from modules.shared.adapters import APIController
+from modules.shared.decorators import API
 
 
 @API.controller("auth")
