@@ -5,7 +5,6 @@ from modules.album.services.application.fetch_album_service import (
 from typing import Annotated
 from fastapi import Depends
 
-from modules.meme.providers.get_memes_paginated_service_provider import GetMemesPaginatedServiceProvider
 from modules.user.providers import GetUserByTokenServiceProvider
 from modules.album.providers import BuildAlbumSlotsServiceProvider
 from modules.meme.providers import (

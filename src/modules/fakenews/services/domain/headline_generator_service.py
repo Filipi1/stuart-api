@@ -4,7 +4,7 @@ from typing import List
 
 class HeadlineGeneratorService:
     """Serviço responsável por gerar manchetes aleatórias para notícias falsas"""
-    
+
     def __init__(self):
         self.headline_templates = [
             "Descobrimos o paradeiro do vendedor de calsinhas, saiba mais como {name} fazia seus esquemas",
@@ -26,9 +26,9 @@ class HeadlineGeneratorService:
             "Exclusivo: {name} admite crime que ninguém esperava",
             "Polêmica: {name} causa polêmica com atitude que chocou a todos",
             "Escândalo: {name} é descoberto em situação que ninguém imaginava",
-            "Bomba: {name} revela informação que pode mudar tudo"
+            "Bomba: {name} revela informação que pode mudar tudo",
         ]
-        
+
         self.subtitle_templates = [
             "Subtítulo curto que complementa a manchete e resume o ponto principal",
             "Investigação revela detalhes surpreendentes sobre o caso",
@@ -39,45 +39,47 @@ class HeadlineGeneratorService:
             "Testemunhas confirmam os fatos relatados",
             "Análise detalhada mostra como tudo aconteceu",
             "Especialistas explicam o significado da descoberta",
-            "População local comenta sobre as revelações"
+            "População local comenta sobre as revelações",
         ]
-    
+
     def generate_headline(self, name: str) -> tuple[str, str]:
         """
         Gera uma manchete e subtítulo aleatórios baseados no nome fornecido
-        
+
         Args:
             name: Nome da pessoa para incluir na manchete
-            
+
         Returns:
             Tupla com (manchete, subtítulo)
         """
         headline_template = random.choice(self.headline_templates)
         subtitle_template = random.choice(self.subtitle_templates)
-        
+
         headline = headline_template.format(name=name)
         subtitle = subtitle_template
-        
+
         return headline, subtitle
-    
+
     def generate_multiple_headlines(self, name: str, count: int = 3) -> List[str]:
         """
         Gera múltiplas manchetes aleatórias para o mesmo nome
-        
+
         Args:
             name: Nome da pessoa para incluir nas manchetes
             count: Número de manchetes para gerar
-            
+
         Returns:
             Lista de strings com as manchetes geradas
         """
         headlines = []
         used_templates = set()
-        
-        while len(headlines) < count and len(used_templates) < len(self.headline_templates):
+
+        while len(headlines) < count and len(used_templates) < len(
+            self.headline_templates
+        ):
             template = random.choice(self.headline_templates)
             if template not in used_templates:
                 headlines.append(template.format(name=name))
                 used_templates.add(template)
-        
+
         return headlines

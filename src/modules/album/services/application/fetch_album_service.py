@@ -52,7 +52,9 @@ class FetchAlbumApplicationService(ApplicationService):
         )
 
         if input.page > total_pages:
-            self.logger.warning(f"Page {input.page} does not exist. Total pages: {total_pages}")
+            self.logger.warning(
+                f"Page {input.page} does not exist. Total pages: {total_pages}"
+            )
             return FetchAlbumResponseDto(
                 page=input.page,
                 total_pages=total_pages,
@@ -72,9 +74,9 @@ class FetchAlbumApplicationService(ApplicationService):
         slot_offset = (input.page - 1) * input.items_per_page
         slots = self.__build_album_slots.process(
             BuildAlbumSlotsRequestDto(
-                user_earned_memes=earned_memes, 
+                user_earned_memes=earned_memes,
                 paginated_memes=paginated_memes,
-                slot_offset=slot_offset
+                slot_offset=slot_offset,
             )
         )
 

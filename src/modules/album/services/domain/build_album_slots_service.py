@@ -8,13 +8,13 @@ from modules.shared.adapters import DomainService
 class BuildAlbumSlotsDomainService(DomainService):
     def process(self, input: BuildAlbumSlotsRequestDto) -> list[AlbumSlotEntity]:
         earned_memes_dict = {meme.meme_id: meme for meme in input.user_earned_memes}
-        
+
         slots = []
-        
+
         for index, meme in enumerate(input.paginated_memes):
             slot_number = input.slot_offset + index + 1
             slot_str = str(slot_number).zfill(3)
-            
+
             if meme.id in earned_memes_dict:
                 earned_meme = earned_memes_dict[meme.id]
                 figure = AlbumFigureEntity(
@@ -26,11 +26,8 @@ class BuildAlbumSlotsDomainService(DomainService):
                 )
             else:
                 figure = None
-            
-            slot = AlbumSlotEntity(
-                slot=slot_str,
-                figure=figure
-            )
+
+            slot = AlbumSlotEntity(slot=slot_str, figure=figure)
             slots.append(slot)
-        
+
         return slots

@@ -1,11 +1,18 @@
 from modules.shared.adapters import DomainService
 from modules.meme.repositories.earned_meme_repository import EarnedMemeRepository
-from modules.user.services.domain.get_user_by_token_service import GetUserByTokenDomainService
+from modules.user.services.domain.get_user_by_token_service import (
+    GetUserByTokenDomainService,
+)
 from modules.meme.entities.meme import MemeEntity
 from modules.meme.entities.earned_meme import EarnedMemeEntity
 
+
 class IncreaseMemeToUserDomainService(DomainService):
-    def __init__(self, get_user_by_token: GetUserByTokenDomainService, earned_meme_repository: EarnedMemeRepository):
+    def __init__(
+        self,
+        get_user_by_token: GetUserByTokenDomainService,
+        earned_meme_repository: EarnedMemeRepository,
+    ):
         self.__get_user_by_token = get_user_by_token
         self.__earned_meme_repository = earned_meme_repository
         super().__init__(IncreaseMemeToUserDomainService.__name__)
@@ -17,5 +24,7 @@ class IncreaseMemeToUserDomainService(DomainService):
             raise ValueError("User not found")
         self.logger.info(f"User found: {user.username}")
 
-        earned_meme = await self.__earned_meme_repository.increase_meme_to_user(user.id, meme.id)
+        earned_meme = await self.__earned_meme_repository.increase_meme_to_user(
+            user.id, meme.id
+        )
         return earned_meme

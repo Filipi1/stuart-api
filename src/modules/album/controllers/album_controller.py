@@ -18,4 +18,6 @@ class AlbumController(APIController):
         page: int = Query(1, description="The page number"),
         items_per_page: int = Query(10, description="The number of items per page"),
     ):
-        return await fetch_album.process(FetchAlbumRequestDto(token=token, page=page, items_per_page=items_per_page))
+        return await fetch_album.process(
+            FetchAlbumRequestDto(token=token, page=page, items_per_page=items_per_page)
+        )

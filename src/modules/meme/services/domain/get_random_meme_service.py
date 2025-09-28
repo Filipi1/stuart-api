@@ -1,12 +1,18 @@
 from typing import Optional
 from modules.meme.entities.meme import MemeEntity
 from modules.meme.repositories.meme_repository import MemeRepository
-from modules.meme.services.domain.increase_meme_to_user_service import IncreaseMemeToUserDomainService
+from modules.meme.services.domain.increase_meme_to_user_service import (
+    IncreaseMemeToUserDomainService,
+)
 from modules.shared.adapters import DomainService
 
 
 class GetRandomMemeDomainService(DomainService):
-    def __init__(self, increase_meme_to_user: IncreaseMemeToUserDomainService, meme_repository: MemeRepository):
+    def __init__(
+        self,
+        increase_meme_to_user: IncreaseMemeToUserDomainService,
+        meme_repository: MemeRepository,
+    ):
         self.__increase_meme_to_user = increase_meme_to_user
         self.__meme_repository = meme_repository
         super().__init__(GetRandomMemeDomainService.__name__)

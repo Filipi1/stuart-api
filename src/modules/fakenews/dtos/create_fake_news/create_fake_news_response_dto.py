@@ -1,17 +1,19 @@
 from dataclasses import dataclass
-from typing import Optional
 
 
 @dataclass
 class CreateFakeNewsResponseDto:
     """DTO para resposta de criação de notícia falsa"""
+
     id: str
     name: str
     headline: str
     image_base64: str
     created_at: str
-    
-    def __init__(self, id: str, name: str, headline: str, image_base64: str, created_at: str):
+
+    def __init__(
+        self, id: str, name: str, headline: str, image_base64: str, created_at: str
+    ):
         self.id = id
         self.name = name
         self.headline = headline

@@ -2,6 +2,7 @@ from modules.user.repositories.user_repository import UserRepository
 from modules.shared.adapters import DomainService
 from modules.user.entities.user import User
 
+
 class CreateUserDomainService(DomainService):
     def __init__(self, user_repository: UserRepository):
         self.__user_repository = user_repository

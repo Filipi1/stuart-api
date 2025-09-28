@@ -4,7 +4,10 @@ from modules.auth.dtos.authenticate import (
 )
 
 from modules.shared.adapters import ApplicationService
-from modules.auth.services.domain.generate_token_service import GenerateTokenDomainService
+from modules.auth.services.domain.generate_token_service import (
+    GenerateTokenDomainService,
+)
+
 
 class AuthenticateApplicationService(ApplicationService):
     def __init__(self, generate_token: GenerateTokenDomainService):

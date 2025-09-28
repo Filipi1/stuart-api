@@ -6,5 +6,5 @@ __all__ = [
     "FakeNewsController",
     "FakeNews",
     "CreateFakeNewsRequestDto",
-    "CreateFakeNewsResponseDto"
+    "CreateFakeNewsResponseDto",
 ]
