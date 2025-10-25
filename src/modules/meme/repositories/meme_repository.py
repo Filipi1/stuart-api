@@ -11,6 +11,12 @@ class MemeRepository(RepositoryAdapter):
     def get_storage_url(self, filename: str) -> str:
         return self.__supabase_service.get_storage_url(filename)
 
+    async def count_total_memes(self) -> int:
+        response = await self.__supabase_service.custom_query(
+            main_table=self.table, select_fields=["count"], where_conditions={}
+        )
+        return response[0]["count"] if response else 0
+
     async def get_meme_by_id(self, meme_id: int) -> MemeEntity:
         response = await self.__supabase_service.read(self.table, {"id": meme_id})
         return MemeEntity(**response[0]) if response else None
@@ -38,12 +44,6 @@ class MemeRepository(RepositoryAdapter):
         random_meme = random.choice(response)
         return MemeEntity(**random_meme)
 
-    async def count_total_memes(self) -> int:
-        response = await self.__supabase_service.custom_query(
-            main_table=self.table, select_fields=["count"], where_conditions={}
-        )
-        return response[0]["count"] if response else 0
-
     async def get_memes_paginated(
         self, page: int, items_per_page: int
     ) -> list[MemeEntity]:
@@ -68,3 +68,33 @@ class MemeRepository(RepositoryAdapter):
 
         response = await self.__supabase_service.create(self.table, data)
         return MemeEntity(**response[0]) if response else None
+
+    async def get_oldest_unsorted_meme_date(self) -> str:
+        """Retorna a data do meme mais antigo que ainda não foi sorteado (drawnTimes = 0)"""
+        response = await self.__supabase_service.custom_query(
+            main_table=self.table,
+            select_fields=["createdAt"],
+            where_conditions={"drawnTimes": 0},
+            order_by={"createdAt": "asc"},
+            limit=1,
+        )
+        return response[0]["createdAt"] if response and len(response) > 0 else None
+
+    async def count_unsorted_memes(self) -> int:
+        """Retorna a quantidade de memes que ainda não foram sorteados (drawnTimes = 0)"""
+        response = await self.__supabase_service.custom_query(
+            main_table=self.table,
+            select_fields=["count"],
+            where_conditions={"drawnTimes": 0},
+        )
+        return response[0]["count"] if response and len(response) > 0 else 0
+
+    async def get_most_sorted_meme(self) -> MemeEntity:
+        """Retorna o meme que foi mais sorteado (maior drawnTimes)"""
+        response = await self.__supabase_service.custom_query(
+            main_table=self.table,
+            select_fields=["*"],
+            order_by={"drawnTimes": "desc"},
+            limit=1,
+        )
+        return MemeEntity(**response[0]) if response and len(response) > 0 else None
