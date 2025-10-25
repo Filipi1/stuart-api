@@ -1,2 +1,5 @@
+from pydantic import Field
+
+
 class FetchUserByUsernameRequestDto:
-    pass
+    username: str = Field(min_length=1)

@@ -14,7 +14,7 @@ def supabase_service_provider(settings: Settings = Depends(settings_provider)):
     return SupabaseService(
         url=settings.supabase_url,
         key=settings.supabase_key,
-        schema=settings.environment == "development" and "staging" or "public",
+        schema=settings.is_development() and "staging" or "public",
     )
 
 

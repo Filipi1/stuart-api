@@ -19,4 +19,4 @@ class FetchUserByUsernameApplicationService(ApplicationService):
         user = await self.get_user_by_username.process(input.username)
         if not user:
             raise UserNotFoundException("User not found")
-        return FetchUserByUsernameResponseDto(user=user)
+        return FetchUserByUsernameResponseDto()

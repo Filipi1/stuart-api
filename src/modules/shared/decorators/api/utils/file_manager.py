@@ -1,6 +1,6 @@
-import importlib
 import inspect
 import os
+from importlib.util import spec_from_file_location, module_from_spec
 from dataclasses import dataclass
 from typing import List
 
@@ -29,8 +29,8 @@ class FileManager:
     ) -> list[str]:
         instances = []
         module_name = os.path.splitext(file_entity.name)[0]
-        spec = importlib.util.spec_from_file_location(module_name, file_entity.path)
-        module = importlib.util.module_from_spec(spec)
+        spec = spec_from_file_location(module_name, file_entity.path)
+        module = module_from_spec(spec)
         spec.loader.exec_module(module)
         for name, obj in inspect.getmembers(module, inspect.isclass):
             if name == match_class.__name__:

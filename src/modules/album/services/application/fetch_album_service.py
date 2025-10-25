@@ -13,7 +13,6 @@ from modules.meme.services.domain.get_memes_paginated_service import (
     GetMemesPaginatedDomainService,
 )
 from modules.shared.adapters import ApplicationService
-from modules.user.dtos.get_user_by_token import GetUserByTokenRequestDto
 from modules.user.exceptions.user_not_found_exception import UserNotFoundException
 from modules.user.services.domain.get_user_by_token_service import (
     GetUserByTokenDomainService,
@@ -36,9 +35,7 @@ class FetchAlbumApplicationService(ApplicationService):
 
     async def process(self, input: FetchAlbumRequestDto) -> FetchAlbumResponseDto:
         self.logger.info(f"Fetching album for user: {input.token}...")
-        user = await self.__get_user_by_token.process(
-            GetUserByTokenRequestDto(token=input.token)
-        )
+        user = await self.__get_user_by_token.process(input.token)
         if not user:
             raise UserNotFoundException()
 

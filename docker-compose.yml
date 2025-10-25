@@ -1,0 +1,32 @@
+services:
+  stuart-api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      PYTHONPATH: /app/src
+      PYTHONUNBUFFERED: '1'
+      ENVIRONMENT: ${ENVIRONMENT:-production}
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_KEY: ${SUPABASE_KEY}
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - stuart-network
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
+
+networks:
+  stuart-network:
+    driver: bridge

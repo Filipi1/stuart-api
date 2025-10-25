@@ -24,7 +24,13 @@ class BuildAlbumSlotsDomainService(DomainService):
                     earned_at=earned_meme.created_at,
                 )
             else:
-                figure = None
+                figure = AlbumFigureEntity(
+                    name=meme.title,
+                    description=meme.description,
+                    image=None,
+                    drawed_times=0,
+                    earned_at=None,
+                )
 
             slot = AlbumSlotEntity(slot=slot_str, figure=figure)
             slots.append(slot)

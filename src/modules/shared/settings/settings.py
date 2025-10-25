@@ -4,10 +4,13 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    environment: str
-    supabase_url: str
-    supabase_key: str
+    environment: Optional[str] = None
+    supabase_url: Optional[str] = None
+    supabase_key: Optional[str] = None
     supabase_schema: Optional[str] = None
+
+    def is_development(self) -> bool:
+        return self.environment == "development"
 
     class Config:
         env_file = ".env"
