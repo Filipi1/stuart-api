@@ -29,13 +29,17 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Set lowercase repository name
+      run: |
+        echo "REPO_NAME=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')/stuart-api" >> $GITHUB_ENV
+
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        tags: ${{ env.REGISTRY }}/${{ env.REPO_NAME }}:latest
         cache-from: type=gha
         cache-to: type=gha,mode=max
         build-args: |
