@@ -1,18 +1,11 @@
-from modules.album.dtos.build_album_slots.build_album_slots_request_dto import (
-    BuildAlbumSlotsRequestDto,
-)
 from modules.album.dtos.fetch_album import FetchAlbumRequestDto, FetchAlbumResponseDto
-from modules.album.services.domain.build_album_slots_service import (
-    BuildAlbumSlotsDomainService,
-)
-from modules.meme.dtos.get_earned_memes_by_user import GetEarnedMemesByUserRequestDto
-from modules.meme.services.domain.get_earned_memes_by_user_service import (
-    GetEarnedMemesByUserDomainService,
-)
-from modules.meme.services.domain.get_memes_paginated_service import (
-    GetMemesPaginatedDomainService,
+from modules.album.enums.album_cache_keys_enum import AlbumCacheKeysEnum
+from modules.album.entities.album import AlbumEntity
+from modules.album.services.domain.get_album_by_user_service import (
+    GetAlbumByUserDomainService,
 )
 from modules.shared.adapters import ApplicationService
+from modules.shared.services.cache.cache_service import CacheService
 from modules.user.exceptions.user_not_found_exception import UserNotFoundException
 from modules.user.services.domain.get_user_by_token_service import (
     GetUserByTokenDomainService,
@@ -23,63 +16,48 @@ class FetchAlbumApplicationService(ApplicationService):
     def __init__(
         self,
         get_user_by_token: GetUserByTokenDomainService,
-        get_earned_memes_by_user: GetEarnedMemesByUserDomainService,
-        build_album_slots: BuildAlbumSlotsDomainService,
-        get_memes_paginated: GetMemesPaginatedDomainService,
+        get_album_by_user: GetAlbumByUserDomainService,
+        cache: CacheService,
     ):
         self.__get_user_by_token = get_user_by_token
-        self.__get_earned_memes_by_user = get_earned_memes_by_user
-        self.__build_album_slots = build_album_slots
-        self.__get_memes_paginated = get_memes_paginated
+        self.__get_album_by_user = get_album_by_user
+        self.__cache = cache
         super().__init__(FetchAlbumApplicationService.__name__)
 
+    def __get_cache_key(self, user_id: int, page: int, items_per_page: int) -> str:
+        return AlbumCacheKeysEnum.ALBUM.value.format(
+            user_id=user_id, page=page, items_per_page=items_per_page
+        )
+
     async def process(self, input: FetchAlbumRequestDto) -> FetchAlbumResponseDto:
-        self.logger.info(f"Fetching album for user: {input.token}...")
+        self.logger.info(f"Fetching album for user: <yellow>{input.token}</yellow>...")
         user = await self.__get_user_by_token.process(input.token)
         if not user:
             raise UserNotFoundException()
-
         self.logger.info(f"User found: {user.id} - <green>{user.username}</green>.")
-        self.logger.info(
-            f"Fetching memes for page {input.page} with {input.items_per_page} items per page."
-        )
-        paginated_memes, total_pages = await self.__get_memes_paginated.process(
-            page=input.page, items_per_page=input.items_per_page
+
+        cache_key = self.__get_cache_key(user.id, input.page, input.items_per_page)
+
+        async def compute_album() -> AlbumEntity:
+            album = await self.__get_album_by_user.process(
+                user_id=user.id,
+                page=input.page,
+                items_per_page=input.items_per_page,
+            )
+            expire = 300 if album.is_last_page and len(album.content) == 0 else 1800
+            self.__cache.set_model(cache_key, album, expire)
+            return album
+
+        album = await self.__cache.get_or_compute_model(
+            key=cache_key,
+            compute_func=compute_album,
+            model_class=AlbumEntity,
         )
 
-        if input.page > total_pages:
-            self.logger.warning(
-                f"Page {input.page} does not exist. Total pages: {total_pages}"
-            )
-            return FetchAlbumResponseDto(
-                page=input.page,
-                total_pages=total_pages,
+        return FetchAlbumResponseDto.from_entity(album) if album else FetchAlbumResponseDto(
+            page=input.page,
+            total_pages=1,
                 items_per_page=input.items_per_page,
                 is_last_page=True,
                 content=[],
             )
-
-        self.logger.info(
-            f"Memes fetched {len(paginated_memes)} for page {input.page} / Total pages: {total_pages}."
-        )
-
-        earned_memes = await self.__get_earned_memes_by_user.process(
-            GetEarnedMemesByUserRequestDto(user_id=user.id)
-        )
-
-        slot_offset = (input.page - 1) * input.items_per_page
-        slots = self.__build_album_slots.process(
-            BuildAlbumSlotsRequestDto(
-                user_earned_memes=earned_memes,
-                paginated_memes=paginated_memes,
-                slot_offset=slot_offset,
-            )
-        )
-
-        return FetchAlbumResponseDto(
-            page=input.page,
-            total_pages=total_pages,
-            items_per_page=input.items_per_page,
-            is_last_page=input.page >= total_pages,
-            content=slots,
-        )
