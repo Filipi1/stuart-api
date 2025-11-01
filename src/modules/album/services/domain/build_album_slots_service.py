@@ -14,7 +14,9 @@ class BuildAlbumSlotsDomainService(DomainService):
             slot_number = input.slot_offset + index + 1
             slot_str = str(slot_number).zfill(3)
 
-            if meme.id in earned_memes_dict:
+            owned = meme.id in earned_memes_dict
+
+            if owned:
                 earned_meme = earned_memes_dict[meme.id]
                 figure = AlbumFigureEntity(
                     name=meme.title,
@@ -32,7 +34,7 @@ class BuildAlbumSlotsDomainService(DomainService):
                     earned_at=None,
                 )
 
-            slot = AlbumSlotEntity(slot=slot_str, figure=figure)
+            slot = AlbumSlotEntity(slot=slot_str, owned=owned, figure=figure)
             slots.append(slot)
 
         return slots
