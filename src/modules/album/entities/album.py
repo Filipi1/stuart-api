@@ -9,4 +9,3 @@ class AlbumEntity(BaseModel):
     items_per_page: int
     is_last_page: bool
     content: list[AlbumSlotEntity]
-

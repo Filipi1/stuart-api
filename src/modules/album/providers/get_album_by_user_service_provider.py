@@ -27,4 +27,3 @@ def get_album_by_user_service_provider(
 GetAlbumByUserServiceProvider = Annotated[
     GetAlbumByUserDomainService, Depends(get_album_by_user_service_provider)
 ]
-

@@ -45,10 +45,14 @@ class CacheService:
         try:
             client = self.__get_client()
             if client is None:
-                self.__logger.error(f"Error getting client for key: <yellow>{key}</yellow>.")
+                self.__logger.error(
+                    f"Error getting client for key: <yellow>{key}</yellow>."
+                )
                 return None
-                
-            self.__logger.info(f"Getting value from cache for key: <yellow>{key}</yellow>.")
+
+            self.__logger.info(
+                f"Getting value from cache for key: <yellow>{key}</yellow>."
+            )
             return client.get(key)
         except Exception:
             return None
@@ -57,13 +61,19 @@ class CacheService:
         try:
             client = self.__get_client()
             if client is None:
-                self.__logger.error(f"Error getting client for key: <yellow>{key}</yellow>.")
+                self.__logger.error(
+                    f"Error getting client for key: <yellow>{key}</yellow>."
+                )
                 return False
             if expire:
-                self.__logger.info(f"Setting value in cache for key: <yellow>{key}</yellow> with expire: <yellow>{expire}</yellow> seconds.")
+                self.__logger.info(
+                    f"Setting value in cache for key: <yellow>{key}</yellow> with expire: <yellow>{expire}</yellow> seconds."
+                )
                 client.setex(key, expire, value)
             else:
-                self.__logger.info(f"Setting value in cache for key: <yellow>{key}</yellow> without expire.")
+                self.__logger.info(
+                    f"Setting value in cache for key: <yellow>{key}</yellow> without expire."
+                )
                 client.set(key, value)
             return True
         except Exception:
@@ -137,4 +147,3 @@ class CacheService:
             return model
         except Exception:
             return None
-

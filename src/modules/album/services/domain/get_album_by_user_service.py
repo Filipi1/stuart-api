@@ -73,4 +73,3 @@ class GetAlbumByUserDomainService(DomainService):
             is_last_page=page >= total_pages,
             content=slots,
         )
-

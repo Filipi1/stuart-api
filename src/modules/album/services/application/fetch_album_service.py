@@ -1,6 +1,6 @@
 from modules.album.dtos.fetch_album import FetchAlbumRequestDto, FetchAlbumResponseDto
-from modules.album.enums.album_cache_keys_enum import AlbumCacheKeysEnum
 from modules.album.entities.album import AlbumEntity
+from modules.album.enums.album_cache_keys_enum import AlbumCacheKeysEnum
 from modules.album.services.domain.get_album_by_user_service import (
     GetAlbumByUserDomainService,
 )
@@ -54,10 +54,14 @@ class FetchAlbumApplicationService(ApplicationService):
             model_class=AlbumEntity,
         )
 
-        return FetchAlbumResponseDto.from_entity(album) if album else FetchAlbumResponseDto(
-            page=input.page,
-            total_pages=1,
+        return (
+            FetchAlbumResponseDto.from_entity(album)
+            if album
+            else FetchAlbumResponseDto(
+                page=input.page,
+                total_pages=1,
                 items_per_page=input.items_per_page,
                 is_last_page=True,
                 content=[],
             )
+        )

@@ -20,4 +20,3 @@ def cache_service_provider(settings: Settings = Depends(settings_provider)):
 
 
 CacheServiceProvider = Annotated[CacheService, Depends(cache_service_provider)]
-

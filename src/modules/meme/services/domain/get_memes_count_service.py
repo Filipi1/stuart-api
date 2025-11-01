@@ -1,5 +1,5 @@
 import asyncio
-from typing import Tuple, Optional
+from typing import Optional, Tuple
 
 from modules.meme.entities.meme import MemeEntity
 from modules.meme.repositories.meme_repository import MemeRepository
