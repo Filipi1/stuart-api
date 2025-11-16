@@ -26,5 +26,4 @@ class GetUserByTokenDomainService(DomainService):
             key=cache_key,
             compute_func=compute_user,
             model_class=User,
-            expire=3600,
         )

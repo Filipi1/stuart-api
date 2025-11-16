@@ -1,3 +1,4 @@
+from datetime import UTC, datetime
 from typing import Any, Dict, List, Optional
 
 from supabase import AsyncClient, AsyncClientOptions, acreate_client
@@ -35,6 +36,8 @@ class SupabaseService:
 
     async def update(self, table: str, id: str, data: dict) -> List[Dict[str, Any]]:
         self.supabase = await self.create_client()
+        # Adiciona updatedAt automaticamente em todas as atualizações
+        data["updatedAt"] = datetime.now(UTC).isoformat()
         await self.supabase.table(table).update(data).eq("id", int(id)).execute()
         updated_data = await self.read(table, {"id": int(id)})
         return updated_data
