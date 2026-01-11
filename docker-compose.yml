@@ -2,7 +2,7 @@ services:
   stuart-api:
     build: .
     ports:
-      - "8000:8000"
+      - "10300:10300"
     environment:
       PYTHONPATH: /app/src
       PYTHONUNBUFFERED: '1'
@@ -13,7 +13,7 @@ services:
       - ./logs:/app/logs
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/')"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:10300/')"]
       interval: 30s
       timeout: 10s
       retries: 3
