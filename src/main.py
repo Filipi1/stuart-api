@@ -6,7 +6,7 @@ from modules.shared.exceptions.application_exception import ApplicationException
 from modules.shared.exceptions.handlers import application_exception_handler
 from modules.shared.middleware.correlation_middleware import CorrelationMiddleware
 
-app = FastAPI()
+app = FastAPI(redirect_slashes=False)
 API.initialize(app)
 
 
