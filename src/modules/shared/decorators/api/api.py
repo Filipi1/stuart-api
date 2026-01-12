@@ -22,7 +22,11 @@ class API:
     def __get_controllers() -> list[APIController]:
         instances = []
         file_manager = FileManager.find_files_in_project("_controller.py")
-        for file in file_manager:
+        
+        # Filtra o api_controller.py (classe base) e processa apenas os controllers reais
+        controller_files = [f for f in file_manager if "api_controller.py" not in f.path]
+        
+        for file in controller_files:
             test = FileManager.get_file_class_instance(file, APIController)
             if not test:
                 continue
@@ -46,7 +50,8 @@ class API:
                 raise ValueError(
                     f"Router not found in {controller.__class__.__name__} did you forget to use @API.controller decorator?"
                 )
-            app.include_router(controller.router, prefix=prefix or "")
+            # Não passar prefix adicional, pois o router já tem o prefixo definido
+            app.include_router(controller.router)
 
     @staticmethod
     def controller(
@@ -72,6 +77,7 @@ class API:
                                 description,
                                 response_model,
                             ) = attr._route
+                            # Registra a rota normalmente
                             self.router.add_api_route(
                                 path,
                                 attr,
@@ -81,6 +87,17 @@ class API:
                                 description=description,
                                 response_model=response_model,
                             )
+                            # Se o path for "/", também registra sem trailing slash para compatibilidade
+                            if path == "/":
+                                self.router.add_api_route(
+                                    "",
+                                    attr,
+                                    methods=[method],
+                                    dependencies=dependencies,
+                                    summary=summary,
+                                    description=description,
+                                    response_model=response_model,
+                                )
 
             return Wrapper
 
