@@ -67,7 +67,7 @@ class MemeRepository(RepositoryAdapter):
         }
 
         response = await self.__supabase_service.create(self.table, data)
-        return MemeEntity(**response[0]) if response else None
+        return MemeEntity(**response) if response else None
 
     async def get_oldest_unsorted_meme_date(self) -> str:
         """Retorna a data do meme mais antigo que ainda não foi sorteado (drawnTimes = 0)"""
