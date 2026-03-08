@@ -8,6 +8,7 @@ dependencies = [
     "fastapi[standard]>=0.116.2",
     "loguru>=0.7.3",
     "pydantic-settings>=2.10.1",
+    "pytomlpp>=1.1.0",
     "supabase>=2.19.0",
     "pillow>=10.0.0",
     "python-multipart>=0.0.6",

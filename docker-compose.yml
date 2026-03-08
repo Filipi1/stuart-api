@@ -5,7 +5,7 @@ services:
       - "${PORT:-10300}:${PORT:-10300}"
     environment:
       PORT: ${PORT:-10300}
-      PYTHONPATH: /app/src
+      PYTHONPATH: /app/src:/app/deps
       PYTHONUNBUFFERED: '1'
       ENVIRONMENT: ${ENVIRONMENT:-production}
       SUPABASE_URL: ${SUPABASE_URL}

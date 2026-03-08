@@ -27,12 +27,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 COPY --from=builder --chown=appuser:appuser /app/deps /app/deps
+COPY --chown=appuser:appuser pyproject.toml ./
 COPY --chown=appuser:appuser src ./src
 
-ENV PATH="/app/deps/bin:$PATH" \
-    PYTHONPATH="/app/src:/app/deps"
+ENV PYTHONPATH="/app/src:/app/deps"
 
-# Python em produção
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONFAULTHANDLER=1 \
@@ -44,4 +43,4 @@ LABEL org.opencontainers.image.title="stuart-api" \
 
 USER appuser
 
-CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-10300} --access-log --log-level info"]
+CMD ["sh", "-c", "python -m uvicorn main:app --host 0.0.0.0 --port ${PORT:-10300} --access-log --log-level info"]
