@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pk-bkd-ms-api-stuart
+  name: pk-bkd-ms-api-stuart
+  namespace: discord
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pk-bkd-ms-api-stuart
+  template:
+    metadata:
+      labels:
+        app: pk-bkd-ms-api-stuart
+    spec:
+      imagePullSecrets:
+        - name: ghcr-api-pull
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - pk-bkd-ms-api-stuart
+                topologyKey: "kubernetes.io/hostname"
+      containers:
+        - name: pk-bkd-ms-api-stuart
+          image: ghcr.io/Filipi1/stuart-api
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 100m
+              memory: 256Mi
+          envFrom:
+            - secretRef:
+                name: stuart-api-secrets
+          env:
+            - name: ENVIRONMENT
+              value: Production
+            - name: SUPABASE_URL
+              value: ${SUPABASE_URL}
+            - name: SUPABASE_KEY
+              value: ${SUPABASE_KEY}
+          startupProbe:
+            httpGet:
+              path: /health-check
+              port: 10300
+              scheme: HTTP
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 10
+            timeoutSeconds: 1
+          readinessProbe:
+            httpGet:
+              path: /health-check
+              port: 10300
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 30
+          livenessProbe:
+            httpGet:
+              path: /health-check
+              port: 10300
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 10
+            timeoutSeconds: 1
