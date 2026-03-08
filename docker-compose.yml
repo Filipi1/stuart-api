@@ -2,8 +2,9 @@ services:
   stuart-api:
     build: .
     ports:
-      - "10300:10300"
+      - "${PORT:-10300}:${PORT:-10300}"
     environment:
+      PORT: ${PORT:-10300}
       PYTHONPATH: /app/src
       PYTHONUNBUFFERED: '1'
       ENVIRONMENT: ${ENVIRONMENT:-production}
@@ -13,11 +14,11 @@ services:
       - ./logs:/app/logs
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:10300/')"]
+      test: ["CMD", "python", "-c", "import urllib.request, os; urllib.request.urlopen(f\"http://127.0.0.1:{os.environ.get('PORT', '10300')}/health-check\")"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 40s
+      start_period: 10s
     networks:
       - stuart-network
     deploy:

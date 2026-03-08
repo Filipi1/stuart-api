@@ -1,52 +1,47 @@
 FROM python:3.12-slim AS builder
 
-ARG SUPABASE_URL
-ARG SUPABASE_KEY
-ARG ENVIRONMENT=production
-
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
-
 ENV UV_COMPILE_BYTECODE=1 \
     UV_LINK_MODE=copy \
     UV_NO_SYNC=1
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    curl \
     && rm -rf /var/lib/apt/lists/*
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
 
 WORKDIR /app
 
 COPY pyproject.toml uv.lock ./
-
-RUN uv sync --frozen --no-dev
+RUN uv export --frozen --no-dev --format requirements-txt -o requirements.txt \
+    && uv pip install --system --target /app/deps -r requirements.txt
 
 FROM python:3.12-slim AS runtime
 
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgomp1 \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN groupadd --gid 1000 appuser && \
-    useradd --uid 1000 --gid appuser --shell /bin/bash --create-home appuser
+    && rm -rf /var/lib/apt/lists/* \
+    && groupadd --gid 1000 appuser \
+    && useradd --uid 1000 --gid appuser --shell /bin/bash --create-home appuser
 
 WORKDIR /app
 
-COPY --from=builder --chown=appuser:appuser /app/.venv /app/.venv
+COPY --from=builder --chown=appuser:appuser /app/deps /app/deps
+COPY --chown=appuser:appuser src ./src
 
-COPY --chown=appuser:appuser src/ ./src/
+ENV PATH="/app/deps/bin:$PATH" \
+    PYTHONPATH="/app/src:/app/deps"
 
-ENV PATH="/app/.venv/bin:$PATH" \
-    PYTHONPATH="/app/src" \
-    PYTHONUNBUFFERED=1 \
-    SUPABASE_URL="${SUPABASE_URL}" \
-    SUPABASE_KEY="${SUPABASE_KEY}" \
-    ENVIRONMENT="${ENVIRONMENT}"
+# Python em produção
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONFAULTHANDLER=1 \
+    PYTHONBREAKPOINT=disable \
+    PYTHONOPTIMIZE=1
+
+LABEL org.opencontainers.image.title="stuart-api" \
+      org.opencontainers.image.description="Stuart Meme Manager API"
 
 USER appuser
 
-EXPOSE 10300
-  
-CMD ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "10300", "--workers", "4", "--access-log", "--log-level", "info"]
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-10300} --access-log --log-level info"]
