@@ -31,7 +31,7 @@ spec:
                 topologyKey: "kubernetes.io/hostname"
       containers:
         - name: pk-bkd-ms-api-stuart
-          image: ghcr.io/Filipi1/stuart-api
+          image: ghcr.io/filipi1/stuart-api
           imagePullPolicy: Always
           resources:
             limits:
