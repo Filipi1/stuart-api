@@ -18,7 +18,7 @@ from modules.shared.adapters import APIController
 from modules.shared.decorators import API
 
 
-@API.controller("meme")
+@API.controller("meme", tags=["Meme"])
 class MemeController(APIController):
     @API.route("/", method=HTTPMethod.GET, response_model=FetchRandomMemeResponseDto)
     async def get_meme(

@@ -2,14 +2,25 @@ import os
 
 import pytomlpp
 from fastapi import FastAPI
+
 from fastapi.middleware.cors import CORSMiddleware
 
 from modules.shared.decorators import API
+from modules.shared.settings.settings import Settings
 from modules.shared.exceptions.application_exception import ApplicationException
 from modules.shared.exceptions.handlers import application_exception_handler
 from modules.shared.middleware.correlation_middleware import CorrelationMiddleware
 
-app = FastAPI(redirect_slashes=False)
+project_info = pytomlpp.load(
+    os.path.join(os.path.dirname(os.path.dirname(__file__)), "pyproject.toml")
+)
+settings = Settings()
+app = FastAPI(
+    redirect_slashes=False,
+    title="Stuart Meme Manager API",
+    description="API for the Stuart Meme Manager",
+    version=project_info["project"]["version"],
+)
 API.initialize(app)
 
 
@@ -26,12 +37,9 @@ app.add_middleware(
 
 @app.get("/health-check")
 async def health_check():
-    project_info = pytomlpp.load(
-        os.path.join(os.path.dirname(os.path.dirname(__file__)), "pyproject.toml")
-    )
     return {
-        "message": f"{project_info["project"]["name"]} is running",
-        "version": project_info["project"]["version"],
-        "environment": os.environ.get("ENVIRONMENT", "unknown"),
+        "message": f"{app.title} is running",
+        "version": app.version,
+        "environment": settings.environment or "unknown",
     }
 

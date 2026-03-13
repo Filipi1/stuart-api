@@ -14,7 +14,7 @@ from modules.shared.adapters import APIController
 from modules.shared.decorators import API
 
 
-@API.controller("coach")
+@API.controller("coach", tags=["Coach"])
 class CoachController(APIController):
     @API.route("/", method=HTTPMethod.GET, response_model=FetchRandomCoachResponseDto)
     async def get_coach(self, fetch_random_coach: FetchRandomCoachProvider):

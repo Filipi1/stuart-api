@@ -16,25 +16,29 @@ class FileEntity:
 class FileManager:
     @staticmethod
     def _get_search_path() -> str:
-        """Determina o caminho base para busca de arquivos."""
-        # Tenta usar PYTHONPATH primeiro (configurado no Docker como /app/src)
         pythonpath = os.environ.get("PYTHONPATH")
         if pythonpath:
-            # Se PYTHONPATH aponta para src/, usa o diretório pai
-            if pythonpath.endswith("/src") or pythonpath.endswith("\\src"):
-                return str(Path(pythonpath).parent)
-            return pythonpath
-        
+            for path in pythonpath.split(os.pathsep):
+                path = path.strip()
+                if not path:
+                    continue
+                if path.endswith("/src") or path.endswith("\\src"):
+                    return str(Path(path).parent)
+                p = Path(path)
+                if p.name == "src":
+                    return str(p.parent)
+            first = pythonpath.split(os.pathsep)[0].strip()
+            if first:
+                p = Path(first)
+                return str(p.parent) if p.name == "src" else first
+
         # Se não houver PYTHONPATH, usa o diretório do arquivo atual
-        # e sobe até encontrar o diretório raiz do projeto
         current_file = Path(__file__).resolve()
-        # Sobe do arquivo atual até encontrar o diretório que contém 'src'
         for parent in current_file.parents:
             src_dir = parent / "src"
             if src_dir.exists() and src_dir.is_dir():
                 return str(parent)
-        
-        # Fallback para o diretório de trabalho atual
+
         return os.getcwd()
 
     @staticmethod
@@ -64,7 +68,15 @@ class FileManager:
         # Determina o diretório src/
         pythonpath = os.environ.get("PYTHONPATH")
         if pythonpath:
-            src_dir = Path(pythonpath)
+            # Usa a primeira entrada de PYTHONPATH que termina em src (ex: /app/src de /app/src:/app/deps)
+            for path in pythonpath.split(os.pathsep):
+                path = path.strip()
+                if path and (path.endswith("/src") or path.endswith("\\src") or Path(path).name == "src"):
+                    src_dir = Path(path)
+                    break
+            else:
+                first = pythonpath.split(os.pathsep)[0].strip()
+                src_dir = Path(first) if first else None
         else:
             # Procura por src/ no caminho do arquivo ou no search_path
             src_dir = None
@@ -107,8 +119,11 @@ class FileManager:
         try:
             # Garante que o diretório src está no sys.path
             pythonpath = os.environ.get("PYTHONPATH")
-            if pythonpath and pythonpath not in sys.path:
-                sys.path.insert(0, pythonpath)
+            if pythonpath:
+                for path in pythonpath.split(os.pathsep):
+                    path = path.strip()
+                    if path and path not in sys.path:
+                        sys.path.insert(0, path)
             elif not pythonpath:
                 # Tenta adicionar o diretório src ao sys.path
                 search_path_obj = Path(search_path)

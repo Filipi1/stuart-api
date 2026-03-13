@@ -8,7 +8,7 @@ from modules.shared.adapters import APIController
 from modules.shared.decorators import API
 
 
-@API.controller("album")
+@API.controller("album", tags=["Album"])
 class AlbumController(APIController):
     @API.route("/", method=HTTPMethod.GET)
     async def get_album(

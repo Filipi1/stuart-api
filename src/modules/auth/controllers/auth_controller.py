@@ -11,7 +11,7 @@ from modules.shared.adapters import APIController
 from modules.shared.decorators import API
 
 
-@API.controller("auth")
+@API.controller("auth", tags=["Auth"])
 class AuthController(APIController):
     @API.route("/", method=HTTPMethod.POST, response_model=AuthenticateResponseDto)
     async def authenticate(

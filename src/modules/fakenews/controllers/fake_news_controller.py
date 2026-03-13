@@ -19,7 +19,7 @@ from modules.shared.decorators import API
 from modules.shared.services.image_builder import ImageBuilderService
 
 
-@API.controller("fakenews")
+@API.controller("fakenews", tags=["Fakenews"])
 class FakeNewsController(APIController):
     def __init__(self):
         self.image_builder_service = ImageBuilderService()
