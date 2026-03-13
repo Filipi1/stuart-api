@@ -46,12 +46,6 @@ spec:
           env:
             - name: PORT
               value: "10300"
-            - name: ENVIRONMENT
-              value: Production
-            - name: SUPABASE_URL
-              value: ${SUPABASE_URL}
-            - name: SUPABASE_KEY
-              value: ${SUPABASE_KEY}
           startupProbe:
             httpGet:
               path: /health-check
