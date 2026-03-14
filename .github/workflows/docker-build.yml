@@ -12,6 +12,8 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: stuart-api
   ARGOCD_APP_NAME: pk-bkd-ms-api-stuart
+  ARGOCD_APP_NAMESPACE: argocd
+  ARGOCD_PROJECT: default
   DEPLOYMENT_NAME: pk-bkd-ms-api-stuart
   DEPLOYMENT_NAMESPACE: discord
 
@@ -92,9 +94,9 @@ jobs:
             -H "Content-Type: application/json" \
             -d '{"prune": true, "force": true}'
 
-      - name: Rollout restart (via ArgoCD resource actions API)
+      - name: Rollout restart (via ArgoCD RunResourceActionV2 API)
         run: |
-          curl -skf -X POST "http://${{ secrets.ARGOCD_TAILSCALE_HOST }}:8081/api/v1/applications/${{ env.ARGOCD_APP_NAME }}/resource/actions" \
+          curl -skf -X POST "http://${{ secrets.ARGOCD_TAILSCALE_HOST }}:8081/api/v1/applications/${{ env.ARGOCD_APP_NAME }}/resource/actions/v2" \
             -H "Authorization: Bearer ${{ steps.argocd-token.outputs.token }}" \
             -H "Content-Type: application/json" \
-            -d "{\"actionName\":\"restart\",\"kind\":\"Deployment\",\"name\":\"${{ env.DEPLOYMENT_NAME }}\",\"namespace\":\"${{ env.DEPLOYMENT_NAMESPACE }}\",\"resourceGroupName\":\"apps\",\"version\":\"v1\"}"
+            -d "{\"action\":\"restart\",\"appNamespace\":\"${{ env.ARGOCD_APP_NAMESPACE }}\",\"group\":\"apps\",\"kind\":\"Deployment\",\"name\":\"${{ env.DEPLOYMENT_NAME }}\",\"namespace\":\"${{ env.DEPLOYMENT_NAMESPACE }}\",\"project\":\"${{ env.ARGOCD_PROJECT }}\",\"resourceName\":\"${{ env.DEPLOYMENT_NAME }}\",\"version\":\"v1\"}"
