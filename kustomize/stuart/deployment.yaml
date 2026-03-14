@@ -6,7 +6,6 @@ metadata:
   name: pk-bkd-ms-api-stuart
   namespace: discord
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: pk-bkd-ms-api-stuart
