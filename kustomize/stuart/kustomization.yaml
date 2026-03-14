@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
+  - hpa.yaml
 
 commonLabels:
   app.kubernetes.io/name: pk-bkd-ms-api-stuart
