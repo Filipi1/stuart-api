@@ -75,7 +75,7 @@ jobs:
       - name: Get ArgoCD token
         id: argocd-token
         run: |
-          response=$(curl -skf -X POST "https://${{ secrets.ARGOCD_TAILSCALE_HOST }}:8081/api/v1/session" \
+          response=$(curl -skf -X POST "http://${{ secrets.ARGOCD_TAILSCALE_HOST }}:8081/api/v1/session" \
             -H "Content-Type: application/json" \
             -d "{\"username\":\"${{ secrets.ARGOCD_USERNAME }}\",\"password\":\"${{ secrets.ARGOCD_PASSWORD }}\"}")
           token=$(echo "$response" | jq -r '.token')
@@ -87,14 +87,14 @@ jobs:
 
       - name: Trigger ArgoCD sync
         run: |
-          curl -skf -X POST "https://${{ secrets.ARGOCD_TAILSCALE_HOST }}:8081/api/v1/applications/${{ env.ARGOCD_APP_NAME }}/sync" \
+          curl -skf -X POST "http://${{ secrets.ARGOCD_TAILSCALE_HOST }}:8081/api/v1/applications/${{ env.ARGOCD_APP_NAME }}/sync" \
             -H "Authorization: Bearer ${{ steps.argocd-token.outputs.token }}" \
             -H "Content-Type: application/json" \
             -d '{"prune": true, "force": true}'
 
       - name: Rollout restart (via ArgoCD resource actions API)
         run: |
-          curl -skf -X POST "https://${{ secrets.ARGOCD_TAILSCALE_HOST }}:8081/api/v1/applications/${{ env.ARGOCD_APP_NAME }}/resource/actions" \
+          curl -skf -X POST "http://${{ secrets.ARGOCD_TAILSCALE_HOST }}:8081/api/v1/applications/${{ env.ARGOCD_APP_NAME }}/resource/actions" \
             -H "Authorization: Bearer ${{ steps.argocd-token.outputs.token }}" \
             -H "Content-Type: application/json" \
             -d "{\"actionName\":\"restart\",\"kind\":\"Deployment\",\"name\":\"${{ env.DEPLOYMENT_NAME }}\",\"namespace\":\"${{ env.DEPLOYMENT_NAMESPACE }}\",\"resourceGroupName\":\"apps\",\"version\":\"v1\"}"
