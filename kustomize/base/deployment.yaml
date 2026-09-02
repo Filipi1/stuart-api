@@ -4,8 +4,8 @@ metadata:
   labels:
     app: pk-bkd-ms-api-stuart
   name: pk-bkd-ms-api-stuart
-  namespace: discord
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: pk-bkd-ms-api-stuart
@@ -14,31 +14,17 @@ spec:
       labels:
         app: pk-bkd-ms-api-stuart
     spec:
-      imagePullSecrets:
-        - name: ghcr-api-pull
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: app
-                      operator: In
-                      values:
-                        - pk-bkd-ms-api-stuart
-                topologyKey: "kubernetes.io/hostname"
       containers:
         - name: pk-bkd-ms-api-stuart
-          image: ghcr.io/filipi1/stuart-api
-          imagePullPolicy: Always
+          image: ghcr.io/prokicon/pk-bkd-ms-stuart
+          imagePullPolicy: IfNotPresent
           resources:
+            limits:
+              cpu: 200m
+              memory: 1Gi
             requests:
               cpu: 100m
               memory: 512Mi
-            limits:
-              cpu: 200m
-              memory: 1G
           ports:
             - name: http
               containerPort: 10300
@@ -48,6 +34,8 @@ spec:
           env:
             - name: PORT
               value: "10300"
+            - name: ENVIRONMENT
+              value: production
           startupProbe:
             httpGet:
               path: /health-check
