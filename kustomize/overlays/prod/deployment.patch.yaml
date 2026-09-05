@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pk-bkd-ms-api-stuart
+spec:
+  template:
+    spec:
+      imagePullSecrets:
+        - name: ghcr-api-pull
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - pk-bkd-ms-api-stuart
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - name: pk-bkd-ms-api-stuart
+          imagePullPolicy: Always
+          env:
+            - name: ENVIRONMENT
+              value: production
+            - name: REDIS_HOST
+              value: redis.infra.svc.cluster.local
+            - name: REDIS_PORT
+              value: "6379"

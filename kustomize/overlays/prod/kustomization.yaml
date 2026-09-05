@@ -11,8 +11,8 @@ namespace: stuart
 
 labels:
   - pairs:
-      environment: local
-      app.kubernetes.io/environment: local
+      environment: prod
+      app.kubernetes.io/environment: prod
 
 patches:
   - path: deployment.patch.yaml
